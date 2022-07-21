@@ -1,22 +1,17 @@
 pipeline {
   agent any
-  stages {
-    stage('Escenario de prueba') {
-      //parallel {
-        stage('Message') {
+    stages {
+      stage('Checkout') {
+        steps {
+          checkout([$class: 'GitSCM', branches: [[name: 'main']], extensions: [], userRemoteConfigs: [[credentialsId: 'User_github', url: 'https://github.com/nestordavid/execution.git']]])
+          }
+        }
+        stage('Escenario de prueba') {
           steps {
             echo 'Hello'
             //sh '/home/david/Documents/build.sh'
             sh './scripts/build.sh'
           }
         }
-        //stage('Buzz Test') {
-          //steps {
-            //sh '/home/david/Documents/test-all.sh'
-          //}
-        //}
-      //}
     }
-
   }
-}
